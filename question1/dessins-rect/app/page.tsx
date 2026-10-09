@@ -27,15 +27,48 @@ export default function Home() {
   async function afficherEvents1(){
     clearShapes();
     // TODO: Il faut appeler le serveur pour obtenir l'event retourné
+    const x = await axios.get("http://localhost:5269/api/Dessins/GetDrawing1")
+    console.log(x);
+    applyEvents(x.data);
   }
 
   async function afficherEvents2(){
     clearShapes();
     // TODO: Il faut appeler le serveur pour obtenir la séquence d'événements 2 (que vous devez créer sur le serveur)
+    const x = await axios.get("http://localhost:5269/api/Dessins/GetDrawing2")
+    console.log(x);
+    applyEvents(x.data);
   }
 
   async function applyEvents(event:any){
     // TODO: Il faut traiter les événements reçus du serveur et dessiner les formes correspondantes
+    switch(event.type){
+      case "Square": {
+        drawSquare(event.x, event.y);
+        break
+      }
+      case "Circle": {
+        drawCircle(event.x, event.y)
+        break
+      }
+      case "Wait" : {
+        await wait(event.secondes)
+        break
+      }
+      case "Star" : {
+        drawStar(event.x,event.y,event.innerRadius)
+        break
+      }
+      case "ChangeColor" : {
+        currentColor.current = event.color
+        break;
+      }
+    }
+    if(Array.isArray(event)){
+      for (const e of event){
+        await applyEvents(e);
+      }
+    }
   }
 
   // ATTENTION: Les méthodes suivantes n'ont pas besoin d'être modifiées pour répondre à la question
