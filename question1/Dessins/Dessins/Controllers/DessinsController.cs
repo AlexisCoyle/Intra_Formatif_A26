@@ -18,18 +18,34 @@ namespace Dessins.Controllers
 
         public ActionResult GetDrawing2()
         {
-            var events = new List<DrawingEvent>
+            var changeColor = new ChangeColor("blue")
             {
-                new ChangeColor("blue"),
-                new DrawCircle(1, 1),
-                new Wait(3),
-                new ChangeColor("red"),
-                new DrawSquare(0, 2), new DrawSquare(2, 2),
-                new Wait(1),
-                new ChangeColor("yellow"),
-                new DrawStar(1, 3, 20)
+                DrawingEvents = [
+                    new DrawCircle(1,1) {
+                        DrawingEvents = [new Wait(3) {
+                        DrawingEvents = [
+                            new ChangeColor("red") {
+                                DrawingEvents =[new DrawSquare (0,2),
+                            new DrawSquare (2,2) {
+                                DrawingEvents =
+                                [
+                                    new Wait(1),
+                                    new ChangeColor("yellow") {
+                                        DrawingEvents = [
+                                            new DrawStar (1,3 ,20)
+                                            ]
+                                    }
+                                ]
+                            }]
+                            }
+
+                            ]
+                    }
+                    ],
+                    }]
+                    
             };
-            return Ok(events);
+            return Ok(changeColor);
         }
 
         // TODO: Il faut ajouter une nouvelle action pour dessiner la séquence mentionnée dans l'énoncé

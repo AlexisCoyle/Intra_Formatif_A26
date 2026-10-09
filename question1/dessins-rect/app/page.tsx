@@ -64,8 +64,8 @@ export default function Home() {
         break;
       }
     }
-    if(Array.isArray(event)){
-      for (const e of event){
+    if(event.drawingEvents){
+      for (const e of event.drawingEvents){
         await applyEvents(e);
       }
     }

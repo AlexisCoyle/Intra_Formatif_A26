@@ -6,7 +6,6 @@
         public int X { get; set; }
         public int Y { get; set; }
         public int InnerRadius { get; set; }
-        
         public DrawStar(int x, int y, int innerRadius)
         {
             X = x;
